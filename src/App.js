@@ -1,27 +1,32 @@
-import React, { Component } from 'react';
-import {Body, Header, Nav} from "./template";
-
+import React, { Component } from "react";
+import { Body, Header, Nav } from "./template";
+import { BrowserRouter as Router } from "react-router-dom";
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            page: "list-mahasiswa"
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: "list",
+      view: "",
+    };
+  }
 
-    setPage = page => this.setState({ page: page ? page : "list" })
+  // setPage = (page) => this.setState({ page: page ? page : "list" });
 
-    render() {
-        const { page } = this.state
-        return (
-            <>
-                <Header></Header>
-                <Nav currentPage={page} goToPage={this.setPage} />
-                <Body currentPage={page} goToPage={this.setPage} />
-            </>
-        );
-    }
+  render() {
+    const { page } = this.state;
+    return (
+      <>
+        <Router>
+          <Header></Header>
+          <Nav currentPage={page} />
+          <Body currentPage={page} />
+          {/* <Nav />
+          <Body /> */}
+        </Router>
+      </>
+    );
+  }
 }
 
 export default App;
