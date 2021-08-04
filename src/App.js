@@ -6,25 +6,24 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: "list",
+      page: "list-mahasiswa",
       view: "",
     };
   }
 
-  // setPage = (page) => this.setState({ page: page ? page : "list" });
+  setPage = (page) =>
+    this.setState({
+      page: page ? page : "list",
+    });
 
   render() {
     const { page } = this.state;
     return (
-      <>
-        <Router>
-          <Header></Header>
-          <Nav currentPage={page} />
-          <Body currentPage={page} />
-          {/* <Nav />
-          <Body /> */}
-        </Router>
-      </>
+      <Router>
+        <Header></Header>
+        <Nav />
+        <Body currentPage={page} goToPage={this.setPage} />
+      </Router>
     );
   }
 }

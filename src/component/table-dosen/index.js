@@ -327,15 +327,19 @@ class TabelDosen extends Component {
       <>
         <div className="main">
           <div>
-            <h2 style={{marginLeft: 100}}>List Data Dosen</h2>
+            <h2 style={{ marginLeft: 100 }}>List Data Dosen</h2>
           </div>
           <div>
-            <button style={{marginLeft: 100}} className="add-data" onClick={() => this.addHandler()}>
+            <button
+              style={{ marginLeft: 100 }}
+              className="add-data"
+              onClick={() => this.addHandler()}
+            >
               Add New
             </button>
           </div>
           <div className="thishome">
-            <table className="customers-list" width="80%" >
+            <table className="customers-list" width="80%">
               <thead>
                 <tr>
                   <th>No</th>

@@ -1,23 +1,35 @@
 import React, { Component } from "react";
 import "./detail.css";
 import profileImg from "./profile.svg";
-// import EditIcon from "@material-ui/icons/Edit";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-class Detail extends Component {
+class DetailProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mhsProfileDetail: {},
       editStatus: false,
+      saveStatus: false,
     };
+    this.baseState = this.state;
   }
 
   componentDidMount() {
     this.setState({
       mhsProfileDetail: this.props.mhsProfileDetail,
     });
+    this.props.changePage("/detail-profile-mahasiswa");
   }
+
+  componentWillMount() {
+    this.resetState();
+  }
+
+  resetState = () => {
+    this.setState(this.baseState);
+  };
 
   editHandler = (e) => {
     this.setState({
@@ -26,12 +38,12 @@ class Detail extends Component {
   };
 
   saveHandler = (e) => {
-    this.setState(
-      {
-        editStatus: false,
-      },
-      this.props.saveProfile(this.state.mhsProfileDetail)
-    );
+    this.setState({
+      editStatus: false,
+      saveStatus: true,
+    });
+
+    this.props.editProfile(this.state.mhsProfileDetail);
   };
 
   handleChange = (e) => {
@@ -92,7 +104,9 @@ class Detail extends Component {
   };
 
   render() {
-    const { goToPage, mhsProfileDetail } = this.props;
+    if (this.state.saveStatus) return <Redirect to="/list-mahasiswa" />;
+
+    const { mhsProfileDetail } = this.props;
     let image = profileImg;
     let defaultImg = true;
 
@@ -134,7 +148,7 @@ class Detail extends Component {
             {this.renderPage()}
           </div>
           <Link to="/list-mahasiswa">
-            <button className="backButton"> Back to List </button>
+            <button className="backButton">Back</button>
           </Link>
         </div>
       </>
@@ -142,4 +156,10 @@ class Detail extends Component {
   }
 }
 
-export default Detail;
+const mapDispatchToProps = (dispatch) => ({
+  changePage: (page) => dispatch({ type: page }),
+  editProfile: (mhsProfileDetail) =>
+    dispatch({ type: "EDIT_PROFILE", payload: { mhsProfileDetail } }),
+});
+
+export default connect(null, mapDispatchToProps)(DetailProfilePage);
